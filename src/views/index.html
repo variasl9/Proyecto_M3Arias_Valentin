@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chateá con Harvey Specter</title>
+  <meta name="description" content="Chateá con Harvey Specter, el socio litigante de Pearson Specter Litt." />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a href="/home" class="brand" data-link>
+        <span class="brand-mark">HS</span>
+        <span class="brand-name">Specter&nbsp;Litt</span>
+      </a>
+      <nav class="nav">
+        <a href="/home" data-link data-route="home">Home</a>
+        <a href="/chat" data-link data-route="chat">Chat</a>
+        <a href="/about" data-link data-route="about">About</a>
+      </nav>
+    </header>
+
+    <main id="app" class="app-view" aria-live="polite"></main>
+
+    <footer class="footer">
+      <p>Proyecto Integrador · ComicSansCon · Powered by Google Gemini</p>
+    </footer>
+  </div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

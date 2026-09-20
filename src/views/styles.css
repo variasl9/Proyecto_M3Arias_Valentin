@@ -1,0 +1,400 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap");
+
+:root {
+  --navy-950: #0b1220;
+  --navy-900: #101a2c;
+  --navy-800: #182338;
+  --navy-700: #253248;
+  --gold-400: #c9a24b;
+  --gold-300: #ddc07a;
+  --cream-100: #f2efe6;
+  --cream-300: #cfc9ba;
+  --wine-500: #7a2e2e;
+  --wine-400: #9c4141;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--navy-950);
+  color: var(--cream-100);
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+}
+
+.app-shell {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Topbar ---------- */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--navy-700);
+  background: var(--navy-900);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.brand-mark {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--gold-400);
+  border-radius: 50%;
+  color: var(--gold-300);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.nav {
+  display: flex;
+  gap: 18px;
+}
+
+.nav a {
+  text-decoration: none;
+  font-size: 0.9rem;
+  color: var(--cream-300);
+  padding: 6px 2px;
+  border-bottom: 2px solid transparent;
+}
+
+.nav a.active {
+  color: var(--gold-300);
+  border-bottom-color: var(--gold-400);
+}
+
+/* ---------- Layout shell ---------- */
+
+.app-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.footer {
+  text-align: center;
+  padding: 14px 16px 20px;
+  font-size: 0.75rem;
+  color: var(--cream-300);
+  opacity: 0.7;
+}
+
+/* ---------- Home view ---------- */
+
+.hero {
+  padding: 48px 0 32px;
+}
+
+.hero-eyebrow {
+  color: var(--gold-300);
+  font-size: 0.85rem;
+  margin: 0 0 10px;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: 2.1rem;
+  line-height: 1.15;
+  margin: 0 0 16px;
+}
+
+.hero p {
+  color: var(--cream-300);
+  max-width: 46ch;
+  margin: 0 0 28px;
+}
+
+.btn-primary {
+  display: inline-block;
+  background: var(--gold-400);
+  color: var(--navy-950);
+  font-weight: 600;
+  text-decoration: none;
+  padding: 12px 22px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.btn-primary:hover {
+  background: var(--gold-300);
+}
+
+.home-quote {
+  border-left: 3px solid var(--gold-400);
+  padding: 4px 0 4px 16px;
+  margin: 32px 0 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--cream-300);
+}
+
+/* ---------- Chat view ---------- */
+
+.chat-view {
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - 130px);
+  padding-top: 12px;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--navy-700);
+  margin-bottom: 10px;
+}
+
+.chat-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--navy-700);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  color: var(--gold-300);
+  font-size: 0.8rem;
+}
+
+.chat-header-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.chat-header-subtitle {
+  font-size: 0.75rem;
+  color: var(--cream-300);
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 2px 12px;
+}
+
+.msg {
+  max-width: 80%;
+  padding: 10px 13px;
+  border-radius: var(--radius-md);
+  font-size: 0.92rem;
+  white-space: pre-wrap;
+}
+
+.msg-user {
+  align-self: flex-end;
+  background: var(--gold-400);
+  color: var(--navy-950);
+  border-bottom-right-radius: 2px;
+}
+
+.msg-model {
+  align-self: flex-start;
+  background: var(--navy-800);
+  border: 1px solid var(--navy-700);
+  border-bottom-left-radius: 2px;
+}
+
+.msg-time {
+  display: block;
+  font-size: 0.65rem;
+  opacity: 0.6;
+  margin-top: 4px;
+}
+
+.msg-error {
+  align-self: center;
+  background: transparent;
+  border: 1px solid var(--wine-500);
+  color: var(--wine-400);
+  font-size: 0.8rem;
+}
+
+.typing {
+  align-self: flex-start;
+  display: flex;
+  gap: 4px;
+  padding: 12px 14px;
+  background: var(--navy-800);
+  border: 1px solid var(--navy-700);
+  border-radius: var(--radius-md);
+  border-bottom-left-radius: 2px;
+}
+
+.typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold-300);
+  animation: bounce 1.2s infinite ease-in-out;
+}
+
+.typing span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.typing span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+.chat-form {
+  display: flex;
+  gap: 8px;
+  padding: 10px 0 14px;
+  border-top: 1px solid var(--navy-700);
+}
+
+.chat-input {
+  flex: 1;
+  background: var(--navy-800);
+  border: 1px solid var(--navy-700);
+  color: var(--cream-100);
+  border-radius: var(--radius-sm);
+  padding: 11px 12px;
+  font-size: 0.92rem;
+  font-family: var(--font-body);
+}
+
+.chat-input:focus {
+  outline: 2px solid var(--gold-400);
+  outline-offset: 1px;
+}
+
+.chat-send {
+  background: var(--gold-400);
+  color: var(--navy-950);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0 18px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.chat-send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- About view ---------- */
+
+.about {
+  padding: 40px 0;
+}
+
+.about h1 {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  margin-bottom: 6px;
+}
+
+.about h2 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  margin: 28px 0 10px;
+  color: var(--gold-300);
+}
+
+.about p {
+  color: var(--cream-300);
+  max-width: 60ch;
+}
+
+.about ul {
+  color: var(--cream-300);
+  padding-left: 20px;
+}
+
+/* ---------- Tablet ---------- */
+
+@media (min-width: 600px) {
+  .hero h1 {
+    font-size: 2.6rem;
+  }
+
+  .app-view {
+    padding: 0 24px;
+  }
+
+  .msg {
+    max-width: 65%;
+  }
+}
+
+/* ---------- Desktop ---------- */
+
+@media (min-width: 1024px) {
+  .app-view {
+    max-width: 860px;
+  }
+
+  .hero {
+    padding: 72px 0 44px;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+  }
+
+  .chat-view {
+    height: calc(100dvh - 150px);
+  }
+
+  .msg {
+    max-width: 55%;
+  }
+}
