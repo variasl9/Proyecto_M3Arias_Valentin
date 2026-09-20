@@ -86,17 +86,33 @@ mockeando `fetch` (sin red real).
 
 ## Capturas de pantalla
 
-> _Agregar acá capturas de las vistas Home, Chat y About una vez desplegado._
+**Home**
+
+![Vista Home](docs/screenshots/home.png)
+
+**Chat**
+
+![Vista Chat](docs/screenshots/chat.png)
+
+**About**
+
+![Vista About](docs/screenshots/about.png)
 
 ## Link a la aplicación desplegada
 
-> _Agregar acá la URL pública de Vercel una vez desplegada._
+https://harvey-chat.vercel.app/
 
 ## Registro del uso de AI en el proyecto
 
-> _Completar con qué prompts usaste, cómo influyeron en tu implementación y
-> qué decisiones tomaste a partir de las respuestas generadas, según pide la
-> guía del Proyecto Integrador._
+**Prompt:** "Necesito que corrobores el proyecto que estoy haciendo, le mando
+todos mis archivos y las consignas etc."
+
+**Cómo influyó en la implementación:** Le pasé a la IA todo el código del
+proyecto junto con la consigna, la guía y la rúbrica, para que revisara si
+cumplía con lo pedido antes de la entrega.
+
+**Decisiones tomadas a partir de la devolución:** A partir de los problemas
+que señaló, corregí `package.json`, `chat.js` y `app.js`.
 
 ## Notas de implementación
 
