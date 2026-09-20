@@ -1,0 +1,16 @@
+{
+  "name": "harvey-specter-chat",
+  "version": "1.0.0",
+  "description": "SPA para chatear con Harvey Specter (Suits) usando Google Gemini AI, desplegada en Vercel.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.4",
+    "jsdom": "^25.0.1"
+  }
+}
