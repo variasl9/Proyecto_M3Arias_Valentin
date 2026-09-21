@@ -3,7 +3,7 @@
 // Google Gemini. La API key vive solo acá (variable de entorno del server),
 // nunca se envía ni se expone al cliente.
 
-const GEMINI_MODEL = "gemini-3.6-flash";
+const GEMINI_MODEL = "gemini-2.5-flash";
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
 const SYSTEM_PROMPT = `
