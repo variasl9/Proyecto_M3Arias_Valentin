@@ -51,8 +51,8 @@ export default async function handler(req, res) {
     parts: [{ text: String(m.text ?? "") }],
   }));
 
-  try {
-    const geminiRes = await fetch(`${GEMINI_URL}?key=${apiKey}`, {
+  const callGemini = () =>
+    fetch(`${GEMINI_URL}?key=${apiKey}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -65,9 +65,37 @@ export default async function handler(req, res) {
       }),
     });
 
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  // Gemini a veces devuelve 503 ("modelo sobrecargado"), un error temporal
+  // del lado de Google. Reintentamos un par de veces con backoff antes de
+  // rendirnos, en vez de fallarle al usuario en el primer hipo del servidor.
+  const MAX_RETRIES = 2;
+  let geminiRes;
+  let errText = "";
+
+  try {
+    for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+      geminiRes = await callGemini();
+
+      if (geminiRes.ok) break;
+
+      errText = await geminiRes.text();
+      const isOverloaded = geminiRes.status === 503;
+      const isLastAttempt = attempt === MAX_RETRIES;
+
+      console.error(
+        `Gemini API error (intento ${attempt + 1}/${MAX_RETRIES + 1}):`,
+        geminiRes.status,
+        errText
+      );
+
+      if (!isOverloaded || isLastAttempt) break;
+
+      await sleep(500 * (attempt + 1)); // backoff: 500ms, luego 1000ms
+    }
+
     if (!geminiRes.ok) {
-      const errText = await geminiRes.text();
-      console.error("Gemini API error:", geminiRes.status, errText);
       return res.status(502).json({ error: "Error al contactar a Gemini AI." });
     }
 

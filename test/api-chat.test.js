@@ -68,6 +68,7 @@ describe("api/chat handler", () => {
   it("devuelve 502 si la llamada a Gemini (mockeada) falla", async () => {
     global.fetch = vi.fn().mockResolvedValue({
       ok: false,
+      status: 400,
       text: async () => "upstream error",
     });
 
@@ -78,6 +79,53 @@ describe("api/chat handler", () => {
     const res = createMockRes();
     await handler(req, res);
 
+    expect(global.fetch).toHaveBeenCalledOnce();
+    expect(res.statusCode).toBe(502);
+  });
+
+  it("reintenta ante un 503 (modelo sobrecargado) y responde ok si el reintento funciona", async () => {
+    global.fetch = vi
+      .fn()
+      .mockResolvedValueOnce({
+        ok: false,
+        status: 503,
+        text: async () => "model overloaded",
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          candidates: [{ content: { parts: [{ text: "Segundo intento, ganado." }] } }],
+        }),
+      });
+
+    const req = {
+      method: "POST",
+      body: { messages: [{ role: "user", text: "Hola" }] },
+    };
+    const res = createMockRes();
+    await handler(req, res);
+
+    expect(global.fetch).toHaveBeenCalledTimes(2);
+    expect(res.statusCode).toBe(200);
+    expect(res.body.reply).toBe("Segundo intento, ganado.");
+  });
+
+  it("devuelve 502 si un 503 persiste en todos los reintentos", async () => {
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: false,
+      status: 503,
+      text: async () => "model overloaded",
+    });
+
+    const req = {
+      method: "POST",
+      body: { messages: [{ role: "user", text: "Hola" }] },
+    };
+    const res = createMockRes();
+    await handler(req, res);
+
+    // MAX_RETRIES = 2 → 3 intentos en total (1 inicial + 2 reintentos)
+    expect(global.fetch).toHaveBeenCalledTimes(3);
     expect(res.statusCode).toBe(502);
   });
 });
