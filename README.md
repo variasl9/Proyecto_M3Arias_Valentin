@@ -98,11 +98,31 @@ mockeando `fetch` (sin red real).
 
 ![Vista About](docs/screenshots/about.png)
 
+## Video demo
+
+[`docs/video/demo-harvey-chat.mp4`](docs/video/demo-harvey-chat.mp4) — recorrido
+por las 3 vistas y una conversación real con Harvey en la app desplegada.
+
+> ⚠️ Este archivo pesa ~62 MB. GitHub permite subir archivos hasta 100 MB,
+> pero no es buena práctica versionar binarios pesados en un repo git (cada
+> clone lo vuelve a descargar). Si el repo empieza a pesar mucho o GitHub se
+> queja al hacer push, subí el video a YouTube (como no listado) o a Google
+> Drive y reemplazá este archivo por un link en vez del `.mp4`.
+
 ## Link a la aplicación desplegada
 
 https://harvey-chat.vercel.app/
 
 ## Registro del uso de AI en el proyecto
+Las capturas estan cargadas en el repositorio de github.
+
+Usé Claude durante todo el desarrollo, principalmente para tres cosas:
+revisar el proyecto completo contra la consigna/guía/rúbrica antes de
+entregar, resolver el deploy en Vercel paso a paso, y diagnosticar errores
+de la API de Gemini en producción. Las capturas completas de esa
+conversación están en [`docs/uso-ia/`](docs/uso-ia/).
+
+**1. Revisión general del proyecto**
 
 **Prompt:** "Necesito que corrobores el proyecto que estoy haciendo, le mando
 todos mis archivos y las consignas etc."
@@ -113,6 +133,32 @@ cumplía con lo pedido antes de la entrega.
 
 **Decisiones tomadas a partir de la devolución:** A partir de los problemas
 que señaló, corregí `package.json`, `chat.js` y `app.js`.
+
+**2. Deploy en Vercel**
+
+No tenía experiencia desplegando en Vercel, así que le pedí a la IA una guía
+paso a paso: cómo conectar el repo, dónde cargar la variable de entorno
+`GEMINI_API_KEY`, y cómo disparar el primer deploy a producción (el
+proyecto estaba vinculado pero nunca se había desplegado — "No Production
+Deployment"). Seguí esos pasos tal cual y así logré la primera URL pública
+funcionando (ver `docs/uso-ia/captura-5.png` en adelante).
+
+**3. Debugging de errores 502/404/503 en producción**
+
+Una vez desplegado, el chat empezó a fallar con errores intermitentes
+(`502 Bad Gateway`). Le compartí a la IA capturas de la consola del
+navegador y de los **Logs** de Vercel, y entre los dos fuimos descartando
+causas: primero pensamos que era un rate limit, después confirmamos con el
+código de status real (`503`, "modelo sobrecargado" del lado de Google) que
+era un problema temporal de disponibilidad. Agregué, con ayuda de la IA, un
+reintento automático con backoff en `api/chat.js` para esos casos. Más
+tarde apareció un `404` distinto: probamos cambiar el modelo a
+`gemini-2.5-flash` pensando que sería más estable, pero Gemini respondió
+que ese modelo ya no está disponible para cuentas nuevas y que había que
+usar `gemini-3.6-flash` — así que revertimos ese cambio. El error final
+resultó ser que un commit con el modelo viejo no se había pusheado a
+tiempo; una vez sincronizado el repo con GitHub, el deploy en Vercel quedó
+andando correctamente.
 
 ## Notas de implementación
 
